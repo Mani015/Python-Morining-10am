@@ -1,9 +1,18 @@
-x=10
-# Global varaible is variable ,it can declare the out side pf the function
-print('Global variable:',x)
-def function():
-    print('Global variable:',x)
-function()
-print('Global variable:',x)
+# z=20
+# def f1():
+#     global z
+#     z=30
+#     print('local variable:',z)
+# f1()
+# print(z)
+# print('modifying the gloval keyword:',z)
 
-# Scope: once we create ,we can use the any where of the entire programm
+
+
+
+list=[1,2,3,4,5,6]
+def f1():
+    global list
+    list.append(7)
+f1()
+print('after using global keyword:',list)
