@@ -1,0 +1,362 @@
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\DELL>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch              |
+| cbv                |
+| dell               |
+| grk                |
+| gun                |
+| information_schema |
+| lap                |
+| man                |
+| mysql              |
+| performance_schema |
+| saw                |
+| sys                |
++--------------------+
+12 rows in set (1.45 sec)
+
+mysql> use batch;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_batch |
++-----------------+
+| employee        |
++-----------------+
+1 row in set (0.23 sec)
+
+mysql> show columns from employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | YES  |     | NULL    |       |
+| fname        | varchar(20) | YES  |     | NULL    |       |
+| location     | varchar(30) | YES  |     | NULL    |       |
+| lname        | varchar(30) | YES  |     | NULL    |       |
+| mobilenumber | double      | YES  |     | NULL    |       |
+| salary       | int         | YES  |     | NULL    |       |
+| age          | int         | YES  |     | NULL    |       |
+| email        | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.08 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.26 sec)
+
+mysql> create user python identified by '0123';
+Query OK, 0 rows affected (1.42 sec)
+
+mysql> quit
+Bye
+
+C:\Users\DELL>mysql -u python -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use batch;
+ERROR 1044 (42000): Access denied for user 'python'@'%' to database 'batch'
+mysql> quit
+Bye
+
+C:\Users\DELL>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch              |
+| cbv                |
+| dell               |
+| grk                |
+| gun                |
+| information_schema |
+| lap                |
+| man                |
+| mysql              |
+| performance_schema |
+| saw                |
+| sys                |
++--------------------+
+12 rows in set (0.00 sec)
+
+mysql> connect batch;
+Connection id:    11
+Current database: batch
+
+mysql> show tables;
++-----------------+
+| Tables_in_batch |
++-----------------+
+| employee        |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> grant insert, select, update on employee to python;
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> quit
+Bye
+
+C:\Users\DELL>mysql -u python -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch              |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> use batch;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_batch |
++-----------------+
+| employee        |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> desc employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | YES  |     | NULL    |       |
+| fname        | varchar(20) | YES  |     | NULL    |       |
+| location     | varchar(30) | YES  |     | NULL    |       |
+| lname        | varchar(30) | YES  |     | NULL    |       |
+| mobilenumber | double      | YES  |     | NULL    |       |
+| salary       | int         | YES  |     | NULL    |       |
+| age          | int         | YES  |     | NULL    |       |
+| email        | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into employee values(5, 'pavan', 'pune', 'kumar', 1230210,500000, 21, 'pavan@gmail');
+Query OK, 1 row affected (0.21 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | pavan   | pune     | kumar |      1230210 | 500000 |   21 | pavan@gmail   |
++------+---------+----------+-------+--------------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> update employee set location='bng' where fname='pavan';
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | pavan   | bng      | kumar |      1230210 | 500000 |   21 | pavan@gmail   |
++------+---------+----------+-------+--------------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from employee where id=5;
+ERROR 1142 (42000): DELETE command denied to user 'python'@'localhost' for table 'employee'
+mysql> quit
+Bye
+
+C:\Users\DELL>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch              |
+| cbv                |
+| dell               |
+| grk                |
+| gun                |
+| information_schema |
+| lap                |
+| man                |
+| mysql              |
+| performance_schema |
+| saw                |
+| sys                |
++--------------------+
+12 rows in set (0.00 sec)
+
+mysql> use batch;
+Database changed
+mysql> grant delete on employee to python;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> quit
+Bye
+
+C:\Users\DELL>mysql -u python -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch              |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> use batch;
+Database changed
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | pavan   | bng      | kumar |      1230210 | 500000 |   21 | pavan@gmail   |
++------+---------+----------+-------+--------------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from employee where id=5;
+Query OK, 1 row affected (0.27 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> Select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql>
