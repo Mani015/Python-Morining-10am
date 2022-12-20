@@ -1,0 +1,134 @@
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\DELL>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch              |
+| cbv                |
+| dell               |
+| grk                |
+| gun                |
+| information_schema |
+| lap                |
+| man                |
+| mysql              |
+| performance_schema |
+| saw                |
+| sys                |
++--------------------+
+12 rows in set (1.06 sec)
+
+mysql> use batch;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_batch |
++-----------------+
+| employee        |
++-----------------+
+1 row in set (0.19 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.18 sec)
+
+mysql> revoke insert , update from employee to python;
+ERROR 1064 (42000): Illegal authorization identifier near 'insert , update from employee to python' at line 1
+mysql> revoke delete, insert from employee to python;
+ERROR 1064 (42000): Illegal authorization identifier near 'delete, insert from employee to python' at line 1
+mysql> revoke insert, delete  on employee from python;
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> quit
+Bye
+
+C:\Users\DELL>mysql -u python -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch              |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.02 sec)
+
+mysql> connect batch;
+Connection id:    10
+Current database: batch
+
+mysql> show tables;
++-----------------+
+| Tables_in_batch |
++-----------------+
+| employee        |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> desc employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | YES  |     | NULL    |       |
+| fname        | varchar(20) | YES  |     | NULL    |       |
+| location     | varchar(30) | YES  |     | NULL    |       |
+| lname        | varchar(30) | YES  |     | NULL    |       |
+| mobilenumber | double      | YES  |     | NULL    |       |
+| salary       | int         | YES  |     | NULL    |       |
+| age          | int         | YES  |     | NULL    |       |
+| email        | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.07 sec)
+
+mysql> insert into employee values(5, 'vamsi', 'mumbai', 'krishna', 23212001,30000,22, 'vamsi@gmail');
+ERROR 1142 (42000): INSERT command denied to user 'python'@'localhost' for table 'employee'
+mysql> delete from employee where id=3;
+ERROR 1142 (42000): DELETE command denied to user 'python'@'localhost' for table 'employee'
+mysql>
