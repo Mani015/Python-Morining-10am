@@ -1,0 +1,346 @@
+Microsoft Windows [Version 10.0.19044.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\DELL>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 25
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch              |
+| cbv                |
+| dell               |
+| employee           |
+| grk                |
+| gun                |
+| information_schema |
+| lap                |
+| man                |
+| mysql              |
+| performance_schema |
+| saw                |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> use batch;
+Database changed
+mysql> select * from employee;
++------+---------+----------+---------+--------------+--------+------+---------------+
+| id   | fname   | location | lname   | mobilenumber | salary | age  | email         |
++------+---------+----------+---------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar   |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma   |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar   |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy   |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | vamsi   | mumbai   | krishan |       123654 |  30000 |   21 | vamsi@gmail   |
+|    6 | pandu   | mumbai   | krishan |       123654 |  30052 |   21 | pandu@gmail   |
+|    6 | rahul   | chennai  | varda   |        12323 |  30000 |   21 | vamsi@gmail   |
+|    7 | sunil   | chennai  | kumar   |     65235622 |  30000 |   24 | sunil@gmail   |
++------+---------+----------+---------+--------------+--------+------+---------------+
+8 rows in set (0.08 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from employee where id=7;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from employee;
++------+---------+----------+---------+--------------+--------+------+---------------+
+| id   | fname   | location | lname   | mobilenumber | salary | age  | email         |
++------+---------+----------+---------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar   |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma   |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar   |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy   |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | vamsi   | mumbai   | krishan |       123654 |  30000 |   21 | vamsi@gmail   |
+|    6 | pandu   | mumbai   | krishan |       123654 |  30052 |   21 | pandu@gmail   |
+|    6 | rahul   | chennai  | varda   |        12323 |  30000 |   21 | vamsi@gmail   |
++------+---------+----------+---------+--------------+--------+------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from employee;
++------+---------+----------+---------+--------------+--------+------+---------------+
+| id   | fname   | location | lname   | mobilenumber | salary | age  | email         |
++------+---------+----------+---------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar   |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma   |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar   |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy   |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | vamsi   | mumbai   | krishan |       123654 |  30000 |   21 | vamsi@gmail   |
+|    6 | pandu   | mumbai   | krishan |       123654 |  30052 |   21 | pandu@gmail   |
+|    6 | rahul   | chennai  | varda   |        12323 |  30000 |   21 | vamsi@gmail   |
++------+---------+----------+---------+--------------+--------+------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> savepoint a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from employee where id=5;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from employee;
++------+---------+----------+---------+--------------+--------+------+---------------+
+| id   | fname   | location | lname   | mobilenumber | salary | age  | email         |
++------+---------+----------+---------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar   |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma   |      1252652 | 350000 |   26 | sarath@gmail  |
+|    3 | revanth | delhi    | kumar   |      1255641 | 350520 |   22 | sumanth@gmail |
+|    4 | revanth | hyd      | reddy   |     45698712 |  35020 |   50 | revanth@gmail |
+|    6 | pandu   | mumbai   | krishan |       123654 |  30052 |   21 | pandu@gmail   |
+|    6 | rahul   | chennai  | varda   |        12323 |  30000 |   21 | vamsi@gmail   |
++------+---------+----------+---------+--------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> rollback a;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'a' at line 1
+mysql> rollback 'a';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''a'' at line 1
+mysql> rollback to a;
+ERROR 1305 (42000): SAVEPOINT a does not exist
+mysql> SAVEPOINT SP1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELETE FROM Student WHERE age = 22;
+ERROR 1146 (42S02): Table 'batch.student' doesn't exist
+mysql> DELETE FROM employee WHERE age = 22;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> ROLLBACK TO SP1;
+ERROR 1305 (42000): SAVEPOINT SP1 does not exist
+mysql> savepoint sp2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ROLLBACK TO SP1;
+ERROR 1305 (42000): SAVEPOINT SP1 does not exist
+mysql> savepoint del;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ROLLBACK TO SP1;
+ERROR 1305 (42000): SAVEPOINT SP1 does not exist
+mysql> select * from employee;
++------+---------+----------+---------+--------------+--------+------+---------------+
+| id   | fname   | location | lname   | mobilenumber | salary | age  | email         |
++------+---------+----------+---------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar   |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma   |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy   |     45698712 |  35020 |   50 | revanth@gmail |
+|    6 | pandu   | mumbai   | krishan |       123654 |  30052 |   21 | pandu@gmail   |
+|    6 | rahul   | chennai  | varda   |        12323 |  30000 |   21 | vamsi@gmail   |
++------+---------+----------+---------+--------------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> savepoint py;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into employee values(7, 'joseph', 'bng', 'samuel', 1230210, 60000, 27, 'samueal@gmail');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee;
++------+---------+----------+---------+--------------+--------+------+---------------+
+| id   | fname   | location | lname   | mobilenumber | salary | age  | email         |
++------+---------+----------+---------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar   |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma   |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy   |     45698712 |  35020 |   50 | revanth@gmail |
+|    6 | pandu   | mumbai   | krishan |       123654 |  30052 |   21 | pandu@gmail   |
+|    6 | rahul   | chennai  | varda   |        12323 |  30000 |   21 | vamsi@gmail   |
+|    7 | joseph  | bng      | samuel  |      1230210 |  60000 |   27 | samueal@gmail |
++------+---------+----------+---------+--------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> savepoint py;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from employee where id=6;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> savepoint del;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback to del;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from employee;
++------+---------+----------+--------+--------------+--------+------+---------------+
+| id   | fname   | location | lname  | mobilenumber | salary | age  | email         |
++------+---------+----------+--------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar  |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma  |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy  |     45698712 |  35020 |   50 | revanth@gmail |
+|    7 | joseph  | bng      | samuel |      1230210 |  60000 |   27 | samueal@gmail |
++------+---------+----------+--------+--------------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> savepoint a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from employee where id=7;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> rollback to a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+3 rows in set (0.01 sec)
+
+mysql> rollback to a;
+ERROR 1305 (42000): SAVEPOINT a does not exist
+mysql> quit
+Bye
+
+C:\Users\DELL>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use batch;
+Database changed
+mysql> select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
++------+---------+----------+-------+--------------+--------+------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> start trnasaction;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'trnasaction' at line 1
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>  SAVEPOINT upd;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>  SAVEPOINT ini;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into employee values(5, 'kiran', 'kadapa', 'kumar', 2020202, 30000, 25, 'kiran@gmail');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | varma |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | kiran   | kadapa   | kumar |      2020202 |  30000 |   25 | kiran@gmail   |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql>  SAVEPOINT ins;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update employee set lname= 'reddy' where id =2;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | reddy |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | kiran   | kadapa   | kumar |      2020202 |  30000 |   25 | kiran@gmail   |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> savepoint upd;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from employee where id=4;
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | reddy |      1252652 | 350000 |   26 | sarath@gmail  |
+|    5 | kiran   | kadapa   | kumar |      2020202 |  30000 |   25 | kiran@gmail   |
++------+---------+----------+-------+--------------+--------+------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> savepoint del;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback to upd;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql>  select * from employee;
++------+---------+----------+-------+--------------+--------+------+---------------+
+| id   | fname   | location | lname | mobilenumber | salary | age  | email         |
++------+---------+----------+-------+--------------+--------+------+---------------+
+|    1 | bharath | chennai  | kumar |      1232123 |  30000 |   25 | bharath@gmail |
+|    2 | sarath  | pune     | reddy |      1252652 | 350000 |   26 | sarath@gmail  |
+|    4 | revanth | hyd      | reddy |     45698712 |  35020 |   50 | revanth@gmail |
+|    5 | kiran   | kadapa   | kumar |      2020202 |  30000 |   25 | kiran@gmail   |
++------+---------+----------+-------+--------------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql>
