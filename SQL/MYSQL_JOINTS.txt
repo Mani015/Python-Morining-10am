@@ -1,0 +1,170 @@
+A Foreign Key in SQL refers to a column or a group of columns used to connect two tables from the same database to perform any operations on the contents of the tables.
+One table’s Foreign key is connected to the primary key (has unique values and is a uniquely identified column in that table) of another table,
+which is used to allow a relationship between both the tables.
+
+Foreign key: A foreign key is a filed or a column that is used to established a link between two tables. 
+A forein key in one table used to point primary key in another table.
+
+Note:The foreign key  constraints prevents invalid data from being inserted into the foregin key column, because it has to be 
+one of the values contained in the parent table.
+
+create table statesinfo (stateid int primary key ,statename varchar(30), statecode varchar(30));
+
+TO pass some data into a table
+
+insert into statesinfo values(1,'andhra pradesh', 'AP');
+insert into statesinfo values(2,'arunachal pradesh', 'AP');
+insert into statesinfo values(3,'telanga', 'TS');
+insert into statesinfo values(4,'madhya pradesh', 'MP');
+
+create table districinfo(districid int primary key, districname varchar(30),stateid int references statesinfo (stateid));
+create table districinfo(districid int primary key, districname varchar(30), stateid int, constraint fk_stateid foreign key (stateid) references statesinfo(stateid));
+
+to passdata into a table
+
+insert into districinfo values(1, 'kadapa', 1);
+insert into districinfo values(2, 'chittor',2);
+
+--------------------------------------------------------------------------
+SQL Server performs sort, intersect, union, and difference operations using in-memory sorting and hash join technology. Using this type of query plan, SQL Server supports vertical table partitioning.
+
+SQL Server implements logical join operations, as determined by Transact-SQL syntax:
+
+JOINS IN SQL SERVER:are used to retrieve data from two or more related tables.in general tables are related to each using foregin key constraints.
+
+select * from statesinfo join districinfo on statesinfo.stateid = districinfo. districid;
+----------------------------------------------------------------------------------------------
+create table city(cid int not null auto_increment,cityname varchar(40), primary key(cid));
+select * from city;
+insert into city (cityname) values ('mumbai'),('delhi'),('rajastan'),('chennai'),('kerala');
+create table customers(id int not null, fname varchar(20), lname varchar(30), city int not null, primary key (id),
+foreign key (city) references city(cid));
+
+select * from customers;
+insert into customers values(11, 'mani', 'kumar', 1);
+insert into customers values(12, 'sunil', 'kumar', 2);
+insert into customers values(13, 'sarath', 'kumar', 4); 
+----------------------------------------------------------------------------------------------------------
+create table pen(pid int not null auto_increment, pname varchar(30), pcolour varchar(30), primary key(pid));
+-- create table city(cid int not null auto_increment,cityname varchar(40), primary key(cid));
+desc pen;
+insert into pen values(1,'bitco', 'black');
+insert into pen values(2,'bright', 'blue');
+insert into pen values(3,'cello', 'red');
+insert into pen values(4,'grip', 'pink');
+insert into pen values(5,'finegrip', 'white');
+insert into pen values(6,'advance', 'yello');
+insert into pen values(7,'super', 'red');
+select * from pen;
+create table pencil(id int not null, pencilname varchar(30), grade int not null, primary key(id), foreign key(grade) 
+references pen(pid));
+desc pencil;
+insert into pencil values(1, 'nataraj', 2);
+insert into pencil values(2, 'apsara', 3);
+insert into pencil values(3, 'black', 4);
+insert into pencil values(4, 'blue',1);
+insert into pencil values(5, 'orange',6);
+insert into pencil values(6, 'pink',5);
+select * from pencil;
+select pen.pid, pen.pname,pen.pcolour ,pencil.id, pencil. pencilname from pen right join pencil on
+ pen.pid = pencil.id;
+--------------------------------------------------------------------------------------------------------------
+select * from pen,pencil;
+select * from pen  cross join pencil;
+
+
+Inner join:This type of join returns those records which have matching values in both tables.
+So, if you perform a inner join operation between the employee table and the projects tables.All the tuples which have matching values in both the tables will be given as output.
+syntax: select table1.column1,table1.column2, table2.column1 from table1 inner join table2 on table1.matchningcolumnname = table2.matchingcolumnname;
+
+select * from statesinfo inner join districinfo on statesinfo.stateid = districinfo.districid;
+
+Left outer join:The left join or the left outer join return all the records from the left table and also those recoreds no matching values  in the right table.
+               : The output or the result set will contain the null values.
+syntax: select table1.column1,table1.column2, table2.column1 from table1 left join table2 on table1.matchningcolumnname = table2.matchingcolumnname;
+
+
+Right outer join:The right join or the right outer join return all the recoreds from the right table and also those records which satisfy a condition from the left table. 
+                :also for the records having no matching values in the left table, the output or the result-set will contain the null values.
+Full outer join
+Cross join
+
+
+pencil;
+
+1	nataraj	1
+2	apsara	3
+3	hb	5
+4	camel	7
+6	bharath	1
+
+
+
+create database super;
+use super;
+create table pen(pid int not null auto_increment, pname varchar(30), pcolour varchar(30), primary key(pid));
+desc pen;
+insert into pen values(1,'bitco', 'black');
+insert into pen values(2, 'cello', 'blue');
+insert into pen values(3, 'meow', 'white');
+insert into pen values(4, 'aqua','pink');
+insert into pen values(5, 'flymax', 'blue');
+insert into pen values(6, 'finegrip', 'black');
+select * from pen;
+insert into pen values(7, 'bicto', 'green');
+insert into pen values(8, 'rajesh', 'red');
+insert into pen values(9, 'pavan', 'blue');
+
+
+
+
+create table pencil(id int not null, pencilname varchar(30), grade int not null, primary key(id), foreign key(grade) 
+references pen(pid));
+show columns from pencil;
+insert into pencil values(1, 'nataraj', 1);
+select * from pencil;
+insert into pencil values(2, 'apsara', 3);
+insert into pencil values(3, 'hb', 5);
+insert into pencil values(4, 'camel', 7);
+insert into pencil values(5, 'syga', 8);
+insert into pencil values(6, 'bharath', 1);
+insert into pencil values(7, 'sravani', 4);
+insert into pencil values(8, 'hb', 3);
+insert into pencil values(9, 'hb', 100);
+insert into pencil values(10, 'vamsi', 1);
+
+
+
+select  pen.pid,pen.pname,pen.pcolour, pencil.id,pencil.pencilname ,pencil.id from pen right outer join
+ pencil on pen.pid = pencil.id ;
+select * from pen,pencil;
+select * from pen  cross join pencil;-- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
