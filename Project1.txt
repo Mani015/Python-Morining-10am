@@ -1,0 +1,31 @@
+from django.http import HttpResponse
+
+def function(request):
+    return HttpResponse('<b><h1>This is my </h1></b>')
+--------------------------------------------------------------------
+urls
+from django.contrib import admin
+from django.urls import path
+from .views import function
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('python/',function,name='function')
+]
+--------------------------------------------------------
+settings.py DIRS
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [r'C:\Users\DELL\Django-10am\project1\env\Scripts\project1'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
